@@ -29,6 +29,18 @@ std::unordered_map<std::bitset<3>, std::bitset<5>> SS_lookup{
         {0b111, 0b00101}
 };
 
+template<std::size_t N>
+std::bitset<N> reversed(const std::bitset<N> &b)
+{
+    std::bitset<N> result = b;
+    for (uint i = 0; i < N / 2; ++i)
+    {
+        result[i] = b[N - 1 - i];
+        result[N-1-i] = b[i];
+    }
+    return result;
+}
+
 template<uint constellationOrder, uint lookupFromDim, uint lookupToDim, uint dataSize>
 std::bitset<dataSize>
 shapeData(const std::bitset<dataSize> &data,

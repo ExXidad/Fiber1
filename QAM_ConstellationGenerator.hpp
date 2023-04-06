@@ -84,4 +84,36 @@ constellation<5> generateQAMConstellation<5>()
     return qam32;
 }
 
+
+constellation<4> qam16SA()
+{
+    using namespace std::complex_literals;
+    constellation<4> qam16{
+            {0b0000, 1. + 1.i},
+            {0b0010, 3. + 1.i},
+            {0b0001, 1. + 3.i},
+            {0b0011, 3. + 3.i},
+            {0b0100, 1. - 1.i},
+            {0b0110, 3. - 1.i},
+            {0b0101, 1. - 3.i},
+            {0b0111, 3. - 3.i},
+            {0b1000, -1. + 1.i},
+            {0b1010, -3. + 1.i},
+            {0b1001, -1. + 3.i},
+            {0b1011, -3. + 3.i},
+            {0b1100, -1. - 1.i},
+            {0b1110, -3. - 1.i},
+            {0b1101, -1. - 3.i},
+            {0b1111, -3. - 3.i}
+    };
+    // Подсчет нормы
+    double constellationNorm = 0.;
+    for (auto &[code, iqPoint]: qam16)
+        constellationNorm += std::norm(iqPoint);
+    constellationNorm = std::sqrt(constellationNorm / 16);
+    for (auto &[code, iqPoint]: qam16)
+        iqPoint /= constellationNorm;
+    return qam16;
+}
+
 #endif //FO1_QAM_CONSTELLATIONGENERATOR_HPP
